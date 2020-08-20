@@ -30,6 +30,13 @@ public class NewEndpointTest extends BaseTest {
     private LocalConfigGlobalEndpointResolver localConfigGlobalEndpointResolver;
     private LocationServiceEndpointResolver locationServiceEndpointResolver;
 
+    static {
+        LocationServiceEndpointResolver.setProductCode(null);
+        LocationServiceEndpointResolver.setRegionId(null);
+        LocationServiceEndpointResolver.setLocationServiceApiVersion("2015-06-12");
+        LocationServiceEndpointResolver.setLocationServiceEndpoint("location-readonly.aliyuncs.com");
+    }
+
     public void initEnv(String testLocalConfig, DefaultAcsClient client, boolean isUsingVpcEndpoint,
                         boolean isUsingInternalLocationService) {
         List<EndpointResolverBase> resolverChain = new ArrayList<EndpointResolverBase>();
@@ -166,7 +173,6 @@ public class NewEndpointTest extends BaseTest {
     @Test
     public void testEndpointComesFromLocationService() throws ClientException {
         initEnv("{}"); // empty local config
-
         for (int i = 0; i < 3; i++) {
             Assert.assertEquals("ecs-cn-hangzhou.aliyuncs.com", resolve("cn-hangzhou", "ecs", "ecs", null));
         }
